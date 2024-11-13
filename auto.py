@@ -6,12 +6,13 @@ import logging
 from watchdog.observers import Observer
 from watchdog.events import LoggingEventHandler
 
-#definition of all the directory to class the downloading things 
-source_dir = "/Users/williamlam/Downloads"
-music_dir = "/Users/williamlam/Downloads/Music"
-document_dir = "/Users/williamlam/Downloads/document"
-image_dir = "/Users/williamlam/Downloads/Images"
-video_dir = "/Users/williamlam/Downloads/Videos"
+#definition of all the directory to class the downloading things
+# assigment them as you want 
+source_dir = ""
+music_dir = ""
+document_dir = ""
+image_dir = ""
+video_dir = ""
 
 
 # definition of all the extensions that i can possibly use
@@ -75,6 +76,11 @@ class MoveHandler(LoggingEventHandler):
         for im_ext in image_extensions:
             #check if the name end with one of the extension
             if name.endswith(im_ext) or name.endswith(im_ext.upper()):
+                #first we try to create the directory if it doesn't exist
+                try:
+                    os.mkdir(image_dir)
+                except:
+                    print("Downloads folder exists")
                 # moving the file if it correspond to one of the extension we have listed
                 move_file(image_dir, entry, name)
                 #print on the terminal
@@ -84,6 +90,10 @@ class MoveHandler(LoggingEventHandler):
     def for_document(self, entry, name):
         for doc_ext in domcument_extensions:
             if name.endswith(doc_ext) or name.endswith(doc_ext.upper()):
+                try:
+                    os.mkdir(document_dir)
+                except:
+                    print("Downloads folder exists")
                 move_file(document_dir, entry, name)
                 logging.info(f"Move Document file :{name}")
 
@@ -92,6 +102,10 @@ class MoveHandler(LoggingEventHandler):
     def for_video(self, entry, name):
         for vid_ext in video_extensions:
             if name.endswith(vid_ext) or name.endswith(vid_ext.upper()):
+                try:
+                    os.mkdir(video_dir)
+                except:
+                    print("Downloads folder exists")
                 move_file(video_dir, entry, name)
                 logging.info(f"Move video file :{name}") 
 
@@ -99,6 +113,10 @@ class MoveHandler(LoggingEventHandler):
     def for_music(self, entry, name):
         for music_ext in music_extensions:
             if name.endswith(music_ext) or name.endswith(music_ext.upper()):
+                try:
+                    os.mkdir(music_dir)
+                except:
+                    print("Downloads folder exists")
                 move_file(music_dir, entry, name)
                 logging.info(f"Move Music file :{name}")
 
