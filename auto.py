@@ -1,6 +1,5 @@
 import os 
 from os.path import splitext, exists, join
-import sys
 import time
 from shutil import move 
 import logging
@@ -62,19 +61,26 @@ class MoveHandler(LoggingEventHandler):
         with os.scandir(source_dir) as entries:
             #traverse the list and print the name of the files or directory 
             for entry in entries: 
+                #retrieve the name of the entry 
                 name = entry.name
+                #check for each function
                 self.for_document(entry, name)
                 self.for_image(entry, name)
                 self.for_music(entry, name)
                 self.for_video(entry, name)
 
-    
+    # for the image 
     def for_image(self, entry, name):
+        #we simply traverse all the extension we store for the image 
         for im_ext in image_extensions:
+            #check if the name end with one of the extension
             if name.endswith(im_ext) or name.endswith(im_ext.upper()):
+                # moving the file if it correspond to one of the extension we have listed
                 move_file(image_dir, entry, name)
+                #print on the terminal
                 logging.info(f"Move image file :{name}")
     
+    # same as for the image just the extension will be for the document and the dest directory too 
     def for_document(self, entry, name):
         for doc_ext in domcument_extensions:
             if name.endswith(doc_ext) or name.endswith(doc_ext.upper()):
@@ -82,13 +88,14 @@ class MoveHandler(LoggingEventHandler):
                 logging.info(f"Move Document file :{name}")
 
 
+    # same as for the image just the extension will be for the video and the dest video too 
     def for_video(self, entry, name):
         for vid_ext in video_extensions:
             if name.endswith(vid_ext) or name.endswith(vid_ext.upper()):
                 move_file(video_dir, entry, name)
                 logging.info(f"Move video file :{name}") 
 
-    
+    # same as for the image just the extension will be for the music and the dest music too 
     def for_music(self, entry, name):
         for music_ext in music_extensions:
             if name.endswith(music_ext) or name.endswith(music_ext.upper()):
@@ -98,7 +105,7 @@ class MoveHandler(LoggingEventHandler):
 
          
 
-
+#given function from the internet nothing to modify
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s - %(message)s',
